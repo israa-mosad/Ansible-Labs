@@ -1,0 +1,26 @@
+- hosts: webservers
+  become: yes
+  tasks:
+  - name: install httpd
+    yum:
+      name: httpd
+      state: installed
+  - name: install firewalld
+    yum:
+	  name: firewalld
+	  state: installed
+  - name: start and enable httpd
+    systemd:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: permit traffic in default zone for https service
+    firewalld:
+      port: 80/tcp
+      permanent: yes
+      state: enabled
+  - name: reload service firewalld
+    systemd:
+      name: firewalld
+      state: reloaded
+
