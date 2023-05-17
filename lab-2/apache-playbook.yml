@@ -5,10 +5,6 @@
     yum:
       name: httpd
       state: installed
-  - name: install firewalld
-    yum:
-	  name: firewalld
-	  state: installed
   - name: start and enable httpd
     systemd:
       name: httpd
@@ -23,4 +19,8 @@
     systemd:
       name: firewalld
       state: reloaded
+  - name: copy index.html file to the managed host
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
 
